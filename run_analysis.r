@@ -1,6 +1,6 @@
 library(XML)
 
-## Read in files
+split## Read in files
 activityLabelsRaw <- read.delim("UCI HAR Dataset/activity_labels.txt", header=F, sep=" ")
 featuresRaw <- read.delim("UCI HAR Dataset/features.txt", header=F, sep=" ")
 subjectTrain <- read.delim("UCI HAR Dataset/train/subject_train.txt", header=F, sep=" ")
@@ -23,12 +23,14 @@ meanStdFeatures <- union(grep("Mean", features, ignore.case=T), grep("Std", feat
 
 ## Merge the files, converting the activity identifier into a factor using the activity labels as names.  
 ## A new column trainingSet is also created with TRUE for rows from the training set 
-## and FALSE for rows from the test set
+## and FALSE for rows from th e test set
 fullDataSet <- rbind(
   cbind(subject=subjectTrain, trainingSet=T, trainX[,meanStdFeatures], activity=lapply(trainY, function(index) { activityLabels[index] })),
   cbind(subject=subjectTest, trainingSet=F, testX[,meanStdFeatures], activity=lapply(testY, function(index) { activityLabels[index] }))
 )
 
-
-
-
+## Set the name of the trainingSet and activity fields
+fullDataSetName <- names(fullDataSet)
+fullDataSetName[1] <- "subject"
+fullDataSetName[length(fullDataSetName)] <- "activity"
+fullDataSetName -> names(fullDataSet)
