@@ -21,4 +21,5 @@ The 6 downloaded tables were stitched together to create a single dataframe.  Th
 *activity : this was created as a 6 level factor, with the factor names coming from the activity_labels file (activityLabels data frame)
 The rows from the test data frames were appended to the rows from the train data frames, with the trainingset field separating them
 
-
+Finally the merged dataset was summarized by activity and subject and the mean of each feature was calculated.  This resulting file was outputted to 
+a comma delimited file, tidy_data.csv

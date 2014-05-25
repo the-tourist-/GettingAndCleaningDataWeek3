@@ -30,7 +30,13 @@ fullDataSet <- rbind(
 )
 
 ## Set the name of the trainingSet and activity fields
-fullDataSetName <- names(fullDataSet)
-fullDataSetName[1] <- "subject"
-fullDataSetName[length(fullDataSetName)] <- "activity"
-fullDataSetName -> names(fullDataSet)
+names(fullDataSet)[1] <- "subject"
+names(fullDataSet)[length(fullDataSetName)] <- "activity"
+
+## Create a melted data frame for activity and subject, measuring each of the features, and then cast this into a 
+## new data frame which summarises each feature by activity and subject
+meltedDataSet  <- melt(fullDataSet, id=c("subject", "activity"), measure.vars=features[meanStdFeatures])
+tidy_data <- dcast(meltedDataSet, subject + activity ~ variable, mean)
+
+## Write the data frame out to a file tidy_data.csv
+write.csv(tidy_data, "tidy_data.csv")
